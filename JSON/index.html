@@ -1,0 +1,141 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<!--<meta http-equiv="Content-Type" content="text/html; charset=gb2312">-->
+</head>
+<body id="BodyText">
+  <script type="text/javascript" src="jquery-2.1.4.js"></script>
+  <script type="text/javascript">
+  	
+  	
+  	function getCompanyInfo(company){
+  		
+  		var info = "company<br>=======<br>" + company.name + "<br><br>";
+  		
+  		info += "employee<br>========<br>";
+      for(var i=0; i<company.employee.length; i++){
+      	info += "name:" + company.employee[i].name + " num:" + company.employee[i].num + " sex:" + company.employee[i].sex + " dep:" + company.employee[i].dep + "<br>";
+      }
+      
+      info += "<br>city<br>====<br>";
+      for(var i=0; i<company.city.length; i++){
+      	info += company.city[i] + "<br>";
+      }
+      
+      info += "<br>department<br>==========<br>";
+      info += "IT: people(" + company.department.IT.num + ") city(" + company.department.IT.city + ")<br>";
+      info += "Sale: people(" + company.department.Sale.num + ") city(" + company.department.Sale.city + ")<br>";
+      info += "Finance: people(" + company.department.Finance.num + ") city(" + company.department.Finance.city + ")<br>";
+      info += "HR: people(" + company.department.HR.num + ") city(" + company.department.HR.city + ")<br>";
+      
+      return info;
+  	}
+  	
+  	
+  	
+  	document.write("<br><ul><li>直接定义使用 JSON 数据</li></ul><br>");
+  	
+    var company = {
+    	  "name" : "microsoft",
+    	  "employee" : [
+    	     { "name":"Lin",  "num":"123", "sex":"male",   "dep":"IT" },
+    	     { "name":"Dong", "num":"456", "sex":"female", "dep":"Sale" },
+    	     { "name":"Zhao", "num":"789", "sex":"female", "dep":"Finance" },
+    	     { "name":"Chen", "num":"101", "sex":"male",   "dep":"HR" }
+    	  ],
+    	  "department" : { 
+    	  	 "IT" : {"num":"100", "city":"GZ SH"}, 
+    	  	 "Sale" : {"num":"300", "city":"GZ SZ"}, 
+    	  	 "Finance" : {"num":"20", "city":"SZ SH"}, 
+    	  	 "HR" : {"num":"30", "city":"GZ SZ SH"}
+    	  },
+    	  "city" : ["GuangZhou", "ShenZhen", "ShangHai"]
+    };
+    
+    document.write(getCompanyInfo(company));
+    
+    
+    
+    document.write("<br><ul><li>使用 eval 转换 JSON 数据</li></ul><br>");
+    
+    var txt = '{' +
+        '   "name" : "google", ' +
+    	  '   "employee" : [ ' +
+    	  '      { "name":"Lin",  "num":"123", "sex":"male",   "dep":"IT" }, ' +
+    	  '      { "name":"Dong", "num":"456", "sex":"female", "dep":"Sale" }, ' +
+    	  '      { "name":"Zhao", "num":"789", "sex":"female", "dep":"Finance" }, ' +
+    	  '      { "name":"Chen", "num":"101", "sex":"male",   "dep":"HR" } ' +
+    	  '   ], ' +
+    	  '   "department" : {  ' +
+    	  '	    "IT" : {"num":"100", "city":"GZ SH"},  ' +
+    	  '	    "Sale" : {"num":"300", "city":"GZ SZ"},  ' +
+    	  '	    "Finance" : {"num":"20", "city":"SZ SH"},  ' +
+    	  '	    "HR" : {"num":"30", "city":"GZ SZ SH"} ' +
+    	  '   }, ' +
+    	  '   "city" : ["GuangZhou", "ShenZhen", "ShangHai"] ' +
+        ' }';
+    
+    var company_2 = eval ("(" + txt + ")");
+
+    document.write(getCompanyInfo(company_2));
+    
+    
+    
+    document.write("<br><ul><li>使用 JSON.parse 转换 JSON 数据 </li></ul><br>");
+    
+    var company_3 = JSON.parse(txt);
+    company_3.name = "apple"
+    
+    document.write(getCompanyInfo(company_3));
+    
+    
+    
+    // $.getJSON(url,[data],[callback])   data 是可选项，表示要发送到服务器的数据
+    $.getJSON(
+         "JSON_TEST.json",
+         function(company){
+            company.name = "qq";
+            var msg = "<br><ul><li>通过 JQUERY 的 getJSON 函数获取服务端 JSON 文件</li></ul><br>";
+            msg += getCompanyInfo(company);
+            document.getElementById('BodyText').innerHTML += msg;
+            /*
+            $.each( 
+                 company,
+                 function(infoIndex, info){
+                    // if more than one object in JSON
+                 }
+            )
+            */
+         }
+    );
+    
+    
+    
+    // getJSON 实际上调用 get，然后 get 调用 ajax
+    $.get(
+    	   "JSON_TEST.json", 
+    	   function(company, status){
+            company.name = "163";
+            var msg = "<br><ul><li>通过 JQUERY 的 get 函数获取服务端 JSON 文件</li></ul><br>";
+            msg += getCompanyInfo(company);
+            document.getElementById('BodyText').innerHTML += msg;
+         }
+    );
+    
+    
+    
+    // getJSON 实际上调用 get，然后 get 调用 ajax
+    $.ajax({
+    	   url: "JSON_TEST.json", 
+    	   success: function(company){
+            company.name = "Huawei";
+            var msg = "<br><ul><li>通过 JQUERY 的 ajax 函数获取服务端 JSON 文件</li></ul><br>";
+            msg += getCompanyInfo(company) + "<br><br><br>";
+            document.getElementById('BodyText').innerHTML += msg;
+         },
+         dataType: "json"
+    });
+    
+  </script>
+</body>
+</html>

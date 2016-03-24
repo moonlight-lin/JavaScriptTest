@@ -1,0 +1,458 @@
+<html>
+<head>
+<script type="text/javascript" src="jquery-2.1.4.js"></script>
+<script type="text/javascript">
+	
+  $(document).ready(function(){
+    
+    $("p").click(function(){
+      $(this).hide();
+    });
+    
+    /* all button will execute this function
+    $("button").click(function(){
+      $("p").hide();
+    });
+    */
+    
+    $("#HideAll").click(function(){
+    	// all p elements
+      $("p").hide();
+    });
+    
+    $("#HideOneByID").click(function(){
+    	// all elements with id Hide_id
+      $("#Hide_id").hide();
+      
+      // all p elements with id Hide_id
+      // $("p#Hide_id").hide();
+    });
+    
+    $("#HideOneByClass").click(function(){
+    	// all elements with class name Hide_class
+      $(".Hide_class").hide();
+      
+      // all p elements with class name Hide_class
+      // $("p.Hide_class").hide();
+    });
+    
+    $("#HideOneByColor").click(function(){
+    	
+      $("font#Hide_color[color='red']").toggle();
+      
+      // $("selector[attribute]")
+      // $("selector[attribute=value]")
+      // $("selector[attribute~=value]")
+      // $("selector[attribute*=value]") 
+      // $("selector[attribute!=value]")
+      // $("selector[attribute^=value]")  
+      // $("selector[attribute$=value]") 
+      // $("selector[attribute1][attribute2]...[attributeN]")
+      
+    });
+    
+    
+    $("#FadeToggleTest").click(function(){
+    	$("div#div1").fadeToggle(3000);
+    	//$("div#div1").fadeIn(3000);
+    	//$("div#div1").fadeOut(3000);
+    	//$("div#div1").fadeTo(3000, 0.15);
+    });
+    
+    $("#SlideToggleTest").click(function(){
+    	$("div#div1").slideToggle(1000);
+    	//$("div#div1").slideUp(1000);
+    	//$("div#div1").slideDown(1000);
+    });
+    
+    var animate = false;
+    $("#AnimateTest").click(function(){
+    	if(animate == false){
+      	$("div#div1").animate(
+      	                       {left:'500px', opacity:'0.5', height:'150px', width:'150px'}, 
+      	                       1000, 
+      	                       function(){
+      		                       $("div#div1").css("color", "red");
+      		                       animate = true;
+      		                     }
+      		                   );
+      }
+      else{
+      	$("div#div1").animate(
+      	                       {left:'0px', opacity:'1', height:'60px', width:'60px'}, 
+      	                       1000, 
+      	                       function(){
+      		                       $("div#div1").css("color", "white");
+      		                       animate = false;
+      		                     }
+      		                   );
+      }
+
+    	// to change color after animate is completed, should add a callback function in animate
+      // if run below cmd after animate, color will be changed before animate is completed
+    	//$("div#div1").css("color", "red");
+    });
+    
+    $("#StopTest").click(function(){
+    	// stop animate/slide/fade
+    	$("div#div1").stop();
+    });
+    
+    
+    $("#GetTest").click(function(){
+    	var msg = "";
+    	msg += "font html : " + $("font#GetSetHtml").html() + "\n";
+    	msg += "font text : " + $("font#GetSetHtml").text() + "\n";
+    	msg += "font attr : " + $("font#GetSetHtml").attr("color") + "\n";
+    	msg += "text val  : " + $("input#test").val() + "\n";
+    	alert(msg);
+    });
+    
+    $("#SetTextAndValTest").click(function(){
+    	$("font#GetSetHtml").text("Hello <b>JQuery</b>");
+    	$("input#test").val("TEXT");
+    });
+    
+    $("#SetHtmlAndAttrTest").click(function(){    
+    	$("font#GetSetHtml").html("Hello <b>JQuery</b>");
+    	$("font#GetSetHtml").attr({"color" : "blue"});
+    });
+    
+    
+    $("#appendTest").click(function(){    
+    	var txt1 = "<p>append new Paragraph by HTML Text</p>";
+      var txt2 = $("<p></p>").text("append new Paragraph by JQuery Text"); 
+      var txt3 = document.createElement("p");
+      txt3.innerHTML = "append new Paragraph by DOM Text";
+      $("p.addTest").append(txt1,txt2,txt3);    
+    });
+    
+    $("#prependTest").click(function(){
+    	var txt1 = "<p>prepend new Paragraph by HTML Text</p>";
+      var txt2 = $("<p></p>").text("prepend new Paragraph by JQuery Text");
+      var txt3 = document.createElement("p");
+      txt3.innerHTML = "prepend new Paragraph by DOM Text";
+      $("p.addTest").prepend(txt1,txt2,txt3);
+    });
+    
+    $("#afterTest").click(function(){    
+    	var txt1 = "<p>after new Paragraph by HTML Text</p>";
+      var txt2 = $("<p></p>").text("after new Paragraph by JQuery Text"); 
+      var txt3 = document.createElement("p");
+      txt3.innerHTML = "after new Paragraph by DOM Text";
+      $("p.addTest").after(txt1,txt2,txt3);    
+    });
+    
+    $("#beforeTest").click(function(){    
+    	var txt1 = "<p>before new Paragraph by HTML Text</p>";
+      var txt2 = $("<p></p>").text("before new Paragraph by JQuery Text"); 
+      var txt3 = document.createElement("p");
+      txt3.innerHTML = "before new Paragraph by DOM Text";
+      $("p.addTest").before(txt1,txt2,txt3);    
+    });
+    
+    $("#removeTest").click(function(){
+    	// also delete <p class="Hide_class">
+      $("p.addTest").remove();    
+    });
+    
+    $("#emptyTest").click(function(){    
+    	// doesn't delete <p class="Hide_class">
+      $("p.addTest").empty();
+    });
+    
+    
+    $("#toggleClassTest").click(function(){    
+    	$("h3,p#ToggleClassParagraph").toggleClass("blue important");  // style="color:xxx"
+    });
+    
+    $("#cssTest").click(function(){
+    	var color = $("font#cssFont").css("color");   // color=xxx
+    	if(color == "rgb(255, 0, 0)")
+    	  $("font#cssFont").css("color", "blue");
+    	else
+    		$("font#cssFont").css("color", "red");
+      
+      // change more value : css({"propertyname":"value","propertyname":"value",...});
+    });
+    
+    $("#getSizeTest").click(function(){    	
+    	var txt = "";
+      txt += "Width: " + $("#divSize").width() + "\n";
+      txt += "Height: " + $("#divSize").height() + "\n";
+      txt += "Inner width: " + $("#divSize").innerWidth() + "\n";
+      txt += "Inner height: " + $("#divSize").innerHeight() + "\n";
+      txt += "Outer width: " + $("#divSize").outerWidth() + "\n";
+      txt += "Outer height: " + $("#divSize").outerHeight() + "\n";
+      txt += "Outer width (+margin): " + $("#divSize").outerWidth(true) + "\n";
+      txt += "Outer height (+margin): " + $("#divSize").outerHeight(true) + "\n";
+      txt += "Document width/height: " + $(document).width() + "x" + $(document).height() + "\n";
+      txt += "Window width/height: " + $(window).width() + "x" + $(window).height() + "\n";
+      
+      alert(txt);
+    });
+    
+    $("#setSizeTest").click(function(){
+    	if($("#divSize").width() == 30)
+    	  $("#divSize").width(60).height(60);
+    	else
+    		$("#divSize").width(30).height(30);
+    });
+    
+    
+    $("#parentTest").click(function(){
+    	$("span.span_1").parent().css({"color":"red","border":"2px solid red"});
+    });
+    
+    $("#parentsTest").click(function(){
+    	$("span.span_1").parents().css({"color":"red","border":"2px solid red"});
+    });
+    
+    $("#parents2Test").click(function(){
+    	$("span.span_1").parents("div.ancestors").css({"color":"red","border":"2px solid red"});
+    });
+    
+    $("#parentsUntilTest").click(function(){
+    	$("span.span_1").parentsUntil("div.ancestors").css({"color":"red","border":"2px solid red"});
+    });
+    
+    $("#childrenTest").click(function(){
+    	$("ul#ul_1").children().css({"color":"red","border":"2px solid red"});
+    });
+    
+    $("#children2Test").click(function(){
+    	$("ul#ul_1").children("li#li_1").css({"color":"red","border":"2px solid red"});
+    });
+    
+    $("#findTest").click(function(){
+    	$("div.ancestors").find("span").css({"color":"red","border":"2px solid red"});
+    	// find all children : $("div").find("*");
+    });
+    
+    $("#siblingsTest").click(function(){
+    	$("li#li_2").siblings().css({"color":"red","border":"2px solid red"});
+    	// ("li#parent_li").siblings("ul")
+    });
+    
+    $("#nextTest").click(function(){
+    	$("li#li_2").next().css({"color":"red","border":"2px solid red"});
+    	// nextAll() nextUntil()
+    });
+    
+    $("#prevTest").click(function(){
+    	$("li#li_2").prev().css({"color":"red","border":"2px solid red"});
+    	// prevAll() prevUntil()
+    });
+    
+    $("#firstTest").click(function(){
+    	$("div.ancestors li").first().css({"color":"red","border":"2px solid red"});  // first li child
+    });
+    
+    $("#lastTest").click(function(){
+    	$("div.ancestors ul").last().css({"color":"red","border":"2px solid red"});   // last ul child
+    });
+    
+    $("#eqTest").click(function(){
+    	$("li").eq(1).css({"color":"red","border":"2px solid red"});   // eq(1) is the 2nd li element
+    });
+    
+    $("#filterTest").click(function(){
+    	$("span").filter(".span_1").css({"color":"red","border":"2px solid red"}); 
+    });
+    
+    $("#notTest").click(function(){
+    	$("span").not(".span_1").css({"color":"red","border":"2px solid red"}); 
+    });
+    
+    
+    $("#JQueryAjaxLoadTest").click(function(){
+    	// $(selector).load(URL,data,callback);
+    	alert("require server");
+    	
+    	$('div.ajax').load('JQueryAjax.txt');   // get JQueryAjax.txt from server!
+    });
+    
+    $("#JQueryAjaxLoad2Test").click(function(){
+    	alert("require server");
+    	
+    	$("div.ajax").load("JQueryAjax.txt #p1", 
+    	                   function(responseTxt, statusTxt, xhr){
+                           if(statusTxt=="success")
+                             alert("success");
+                           if(statusTxt=="error")
+                             alert("status: " + xhr.status + ";  statusText: " + xhr.statusText);
+                         });
+    });
+    
+    $("#JQueryAjaxGetTest").click(function(){
+    	alert("require server");
+    	
+    	// $.get(URL,callback);
+    	/*
+    	$.get(
+    	      "demo_test.asp", 
+    	      function(data,status){
+              alert("Data: " + data + "\nStatus: " + status);
+            }
+      );
+      */
+    });
+    
+    $("#JQueryAjaxPostTest").click(function(){
+    	alert("require server");
+    	
+    	// $.post(URL,data,callback);
+    	/*
+    	$.post(
+    	       "demo_test_post.asp",
+             {
+               name:"Donald Duck",
+               city:"Duckburg"
+             },
+             function(data,status){
+               alert("Data: " + data + "\nStatus: " + status);
+             }
+      );
+    	*/
+    });
+    
+  });
+  
+</script>
+
+<style type="text/css">
+  .important
+  {
+    font-weight:bold;
+    font-size:xx-large;
+  }
+  
+  .blue
+  {
+    color:blue;
+  }
+  
+  .ancestors *
+  { 
+    display: block;
+    border: 2px solid lightgrey;
+    color: lightgrey;
+    padding: 5px;
+    margin: 15px;
+  }
+</style>
+
+</head>
+
+<body>
+  <p id="Hide_id">If you click on a paragraph, it will disappear (ID of this paragraph is "Hide_id")</p>
+  <h2>This is a heading</h2>
+  <p class="Hide_class">This is a paragraph (class of this paragraph is "Hide_class")</p>
+  <p>This is another paragraph</p>
+  
+  <font id="Hide_color" color="red">
+  	This is a <b>font</b> element
+  </font>
+  <br><br>  
+  
+  <button type="button" id="HideAll">Hide All Paragraph</button>
+  <button type="button" id="HideOneByID">Hide One Paragraph By ID</button>
+  <button type="button" id="HideOneByClass">Hide One Paragraph By Class</button>
+  <button type="button" id="HideOneByColor">Hide/Show font By color</button>
+  <br><br>
+  
+  <div id="div1" align=center style="width:60px;height:60px;background-color:blue;color:white;position:relative;">
+  	JQuery
+  </div>
+  <br>
+  
+  <button type="button" id="FadeToggleTest">Fade Toggle</button>
+  <button type="button" id="SlideToggleTest">Slide Toggle</button>
+  <button type="button" id="AnimateTest">Animate</button>
+  <button type="button" id="StopTest">Stop</button>
+  <br><br>
+
+  <font id="GetSetHtml" color="red">This is another <b>font</b> element</font>
+  <br><br>
+    
+  <input type="text" id="test" value="input text">
+  <br><br>
+  
+  <button type="button" id="GetTest">Get html text val attr</button>
+  <button type="button" id="SetTextAndValTest">Set text and val</button>
+  <button type="button" id="SetHtmlAndAttrTest">Set html and attr</button>
+  <br><br>
+  
+  <p class="addTest" style="color:red;border:2px solid lightgrey;">This is a paragraph for new elements add test</p><br>
+  
+  <button type="button" id="appendTest">append</button>
+  <button type="button" id="prependTest">prepend</button>
+  <button type="button" id="afterTest">after</button>
+  <button type="button" id="beforeTest">before</button>
+  <button type="button" id="removeTest">remove</button>
+  <button type="button" id="emptyTest">empty</button>
+  <br>
+  
+  <h3>This is h3 heading</h3>
+  <p id="ToggleClassParagraph">This is a paragraph for toggle class test</p>
+  <font id="cssFont" color="red">for css test</font><br><br>
+  <div id="divSize" style="width:30px;height:30px;background-color:red;position:relative;"></div>
+  <br>
+  
+  <button type="button" id="toggleClassTest">toggleClass</button>
+  <button type="button" id="cssTest">css</button>
+  <button type="button" id="getSizeTest">get size</button>
+  <button type="button" id="setSizeTest">set size</button>
+  <br><br>
+  
+  <!-- -->
+  <div class="ancestors">
+  	<ul id="ul_1">ul
+      <li id="li_1">li
+        <span class="span_1">span</span>
+      </li>
+      <li id="li_2">another li
+        <span class="span_2">another span</span>
+      </li>
+      <ul id="ul_2">another ul</ul>
+    </ul>
+  </div><br> 
+  
+  <button type="button" id="parentTest">parent</button>
+  <button type="button" id="parentsTest">parents</button>
+  <button type="button" id="parents2Test">parentsWithParam</button>
+  <button type="button" id="parentsUntilTest">parentsUntil</button>
+  &nbsp;&nbsp;
+  
+  <button type="button" id="childrenTest">children</button>
+  <button type="button" id="children2Test">childrenWithParam</button>
+  <button type="button" id="findTest">find</button>
+  &nbsp;&nbsp;
+  
+  <button type="button" id="siblingsTest">siblings</button>
+  <button type="button" id="nextTest">next</button>
+  <button type="button" id="prevTest">prev</button>
+  &nbsp;&nbsp;
+  
+  <button type="button" id="firstTest">first</button>
+  <button type="button" id="lastTest">last</button>
+  <button type="button" id="eqTest">eq</button>
+  <button type="button" id="filterTest">filter</button>
+  <button type="button" id="notTest">not</button>
+  <br><br>
+  
+  <div class="ajax">JQueryAjax</div><br>
+    
+  <button type="button" id="JQueryAjaxLoadTest">JQueryAjax load</button>
+  <button type="button" id="JQueryAjaxLoad2Test">JQueryAjax load with callback</button>
+  <button type="button" id="JQueryAjaxGetTest">JQueryAjax get</button>
+  <button type="button" id="JQueryAjaxPostTest">JQueryAjax post</button>
+  <br><br>
+  
+  <font>如果其他 JavaScript 框架也使用 $ 符号作为简写, 可使用 noConflict() 方法</font>
+  
+  <br><br><br>
+  
+</body>
+
+</html> 

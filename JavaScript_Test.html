@@ -1,0 +1,1202 @@
+<! DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" 
+"http://www.w3.org/TR/REC-html140/strict.dtd"> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312"> 
+
+<title>Sample Page!</title>  
+<script language="JavaScript" type="text/javascript"> 
+<!-- 
+    
+  var timerID = null; 
+  var timerRunning = false;   
+
+
+  document.write("<br><br><br><center>=== JavaScript IN head ===</center><br><br>");
+  document.write("<center><a href=http://www.w3school.com.cn/tags/index.asp>http://www.w3school.com.cn/tags/index.asp</a></center><br><br>");
+
+  document.onmousedown=mousedown;		// 当鼠标键被按下时，调用 mousedown 函数
+  	
+
+  // onLoad="StartClock()"
+  function StartClock()  
+  {   	 
+     if(timerRunning) 
+        clearTimeout(timerID); 
+     timerRunning = false; 
+     MyTimer(); 
+  }
+  
+  function MyTimer()
+  {
+     var nowTime = new Date();
+	   
+     // ======================
+     // 访问文档对象的几种方式
+     // ======================
+	   
+     // 1. 位置
+     //document.forms[1].elements[0].value=nowTime.toString();
+     // 2. 名字
+     //document.MyForm.MyText.value=nowTime.toString();
+     // 3. 联合数组
+     //document.forms["MyForm"].elements["MyText"].value=nowTime.toString();
+     // 4. ID
+     document.getElementById('MyText').value=nowTime.toString();
+	   
+	   
+     timerID=setTimeout("MyTimer()",1000); 
+     timerRunning = true; 
+	   
+     // 可以用   timerID=setInterval("MyTimer()", 1000);   和   clearInterval(timerID);
+	   
+     // setInterval 会不断执行，setTimeout 只执行一次	   
+  }
+	
+  // 屏蔽鼠标右键 document.onmousedown=mousedown;
+  function mousedown() {
+    if(event.button == 2){		//判断是否按下的是鼠标右键
+       event.returnValue=false;
+       alert("禁止使用鼠标右键！\n" + "鼠标位置：" + event.clientX + " " + event.clientY);
+    }
+    else if(event.button == 0 && event.srcElement.className == "fontTest"){	   //按下左键，应用 srcElement 属性获取当前事件的对象
+     	 
+       var msg = "发生事件的类型:\n"; 
+       msg += "    type = " + event.type + "\n\n"; 
+       msg += "发生事件的原始对象:\n"; 
+       msg += "    target = " + event.srcElement + "\n\n"; 
+       msg += "光标相对于事件所在文档的水平和垂直位置(像素) :\n"; 
+       msg += "    x = " + event.x + "   y = " + event.y + "\n\n"; 
+       msg += "光标相对于事件所在容器的水平和垂直位置(像素) :\n"; 
+       msg += "    x = " + event.offsetX + "   y = " + event.offsetY + "\n\n"; 
+       msg += "光标相对于事件所在屏幕的水平和垂直位置(像素) :\n"; 
+       msg += "    x = " + event.screenX + "   y = " + event.screenY + "\n\n"; 
+       msg += "光标相对于事件所在Web页面的水平和垂直位置(像素) : \n"; 
+       msg += "    x = " + event.clientX + "   y = " + event.clientY + "\n\n"; 
+       msg += "altkey  crlkey  shiftkey  属性 : \n"; 
+       msg += "    altkey = " + event.altKey + "   crlkey = " + event.ctrlKey + "   shiftkey = " + event.shiftKey + "\n\n"; 
+       msg += "keyCode 属性 : \n";
+       msg += "    keyCode = " + event.keyCode + "\n\n";   // mouse 事件中不会有 key 属性
+       alert(msg);
+       
+       // ============================================
+       // document.write("<br> fontTest <br><br>");   
+       // 如果在这里调 document.write 会覆盖已有的内容
+       // 因为此时 HTML 已经加载完成，document.write 会重新打开一个新的 document
+       // 可通过 innerHTML innerText outerHTML outerText 等属性改变 HTML 的内容：document.getElementById('MyForm2').innerHTML += "<center><p>interHTML TEST</p></center>";
+       
+   	}
+  }
+	
+  // onkeydown="maskingKeyboard()"
+  function maskingKeyboard() 
+  {
+      if(event.keyCode==8){ 	    //判断是否为退格键
+          event.keyCode=0;
+          event.returnValue=false;
+          alert("当前设置不允许使用退格键");
+      }
+      if(event.keyCode==13){		//判断是否为回车键
+          event.keyCode=0;
+          event.returnValue=false;
+          alert("当前设置不允许使用回车键");
+      }
+      if(event.keyCode==116){	  //判断是否为F5
+          event.keyCode=0;
+          event.returnValue=false;
+          alert("当前设置不允许使用F5刷新键");
+      }
+      if((event.altKey)&&((window.event.keyCode==37)||(window.event.keyCode==39))){	  //判断是否为Alt+方向键←或方向键→
+          event.returnValue=false;
+          alert("当前设置不允许使用Alt+方向键←或方向键→");
+      }
+      if((event.ctrlKey)&&(event.keyCode==78)){	      //判断是否为Ctrl+N
+          event.returnValue=false;
+          alert("当前设置不允许使用Ctrl+N新建IE窗口");
+      }
+      if((event.shiftKey)&&(event.keyCode==121)){   	//判断是否为shift+F10
+          event.returnValue=false;
+          alert("当前设置不允许使用shift+F10");
+      }
+      if((event.shiftKey) && (event.altKey)){
+          event.returnValue=true;
+          alert("Hello JavaScript");
+      }
+  }
+	
+  window.onload = function () 
+  {
+     var msg = "\nwindow.onload : 浏览器载入了文档!\n"; 
+     document.MyForm.MyEventText.value=msg.toString();
+  } 
+  window.onresize = function () { 
+  	 var msg = "\nwindow.onresize ：用户改变了窗口尺寸!\n";
+  	 document.MyForm.MyEventText.value=msg.toString();
+     alert(msg); 
+  }
+  //window.onfocus    // 取得焦点
+  //window.onblur     // 失去焦点
+  //window.onscroll   // 拖了滚动条
+
+  function MyFocus() {
+     document.MyForm.MyEventText.value="\nonfocus ：用户获取了日期文本框焦点\n";
+  }
+	
+  function MySubmit() 
+  { 
+    var msg="\n系统提示信息: \n\n"; 
+    if(document.all.MyForm2.name.value=='') { 
+       msg+="您输入的用户名为空,请重新填写并确认! \n"; 
+       alert(msg); 
+       document.all.MyForm2.name.focus(); 
+       return false; 
+    } 
+    if(document.all.MyForm2.password.value=='') {
+       msg+="您输入的密码为空,请重新填写并确认! \n"; 
+       alert(msg); 
+       document.all.MyForm2.password.focus() 
+       return false; 
+    }
+  }  
+
+  function MyBubble(msg,level)
+  {
+  	MyBubble.msg += msg;
+  	if(level == 0){
+  	  alert(MyBubble.msg);
+  	  MyBubble.index++;
+  	  MyBubble.msg="第 " + MyBubble.index + " 次\n=====\n";
+  	}
+  	else if(level == 2){
+      MyBubble.cancel = !MyBubble.cancel;
+      if(MyBubble.cancel){
+        MyBubble.msg += "阻止上溯\n\n";
+        event.cancelBubble=true
+      }
+  	}
+  	// document.body.fireEvent("onclick",event);  // 可将 event 转向 body
+  }
+  MyBubble.index = 1;
+  MyBubble.msg = "第 " + MyBubble.index + " 次\n=====\n";
+  MyBubble.cancel = true;
+  
+  function myCompAttrTest()
+  {
+  	if(document.all['MyTest_h3'].align == 'left'){
+      document.all['MyTest_h3'].align = 'right';
+      document.all['MyTest_h3'].style.color = 'red';
+      document.all['MyTest_h3'].innerText = 'My h3 Test String! 右边!';  		
+    } 
+    else if (document.all['MyTest_h3'].align == 'right'){
+      document.all['MyTest_h3'].align = 'center';      
+      if(document.body.style.backgroundColor != 'yellow'){
+      	document.body.style.backgroundColor = 'yellow';
+      }
+      else{
+      	document.body.style.backgroundColor = 'white';
+      }
+      document.all['MyTest_h3'].style.color = 'black';
+      document.all['MyTest_h3'].innerText = 'My h3 Test String! 中间!';  		
+    } 
+    else if (document.all['MyTest_h3'].align == 'center'){
+      document.all['MyTest_h3'].align = 'left';
+      document.all['MyTest_h3'].style.color = 'blue';
+      document.all['MyTest_h3'].innerText = 'My h3 Test String! 左边!';
+    }
+  }
+  
+  var colorChange = false;
+  function myColorTest()
+  {
+  	if(!colorChange){
+  	  document.bgColor = "black";       // 背景
+      document.fgColor = "red";         // 文本
+      document.linkColor = "white";     // 未访问链接
+      document.alinkColor = "yellow";   // 活动链接
+      document.vlinkColor = "blue";     // 已被访问链接
+      colorChange = true;
+    } else {
+      document.bgColor = "white"; 
+      document.fgColor = "black"; 
+      document.linkColor = "blue"; 
+      document.alinkColor = "yellow"; 
+      document.vlinkColor = "purple";       
+      colorChange = false;
+    }
+  }
+ 
+  function myPromptConfirmTest()
+  {
+  	var inputStr = window.prompt("请输入一个整数", 123);
+  	while(inputStr != null){
+      var confirmResult = window.confirm("\n您输入的是：\n     " + inputStr);
+  	  if(confirmResult == false){
+  	  	inputStr = window.prompt("请输入一个整数", 123);
+  	  	continue;
+  	  }
+  	  if(/^-?([1-9]\d*|0)$/.test(inputStr) == false ){
+  	  	alert("错误：输入的不是整数");
+  	  	inputStr = window.prompt("请输入一个整数", 123);
+  	  	continue;
+  	  }
+  	  if(parseInt(inputStr) % 2 == 0){
+  	  	window.alert(inputStr + " 是偶数");
+  	  }else{
+  	  	window.alert(inputStr + " 是奇数");
+  	  }
+  	  inputStr = null;
+  	}
+  }
+  
+  function myNodeTest(act)
+  {
+  	if(act == 1){
+      var node = document.getElementById('MyForm');
+      var parentNode = node.parentNode;
+      var msg = "parent: " + parentNode.nodeName + "  " + parentNode.nodeValue + "  " + parentNode.nodeType + "\n";
+      msg = msg + "node: " + node.nodeName + "  " + node.nodeValue + "  " + node.nodeType + "\n";
+      for(var i = 0; i < node.childNodes.length; i++)
+         msg = msg + "child[" + i + "]: " + node.childNodes[i].nodeName + "  " + node.childNodes[i].nodeValue + "  " + node.childNodes[i].nodeType + "\n";
+         // 还有 attributes firstChild lastChild previousSibling nextSibling 等属性  
+      alert(msg);
+    }
+    else if(act == 2){
+      var nodeParent = document.getElementById('NodeTest').parentNode;
+    	
+      var newLink = document.createElement("a"); 
+      var newLinkTextNode = document.createTextNode("腾讯");
+      var newBr = document.createElement("br");
+            
+      newLinkTextNode.appendData("首页");  // 还有 deleteData(offset,count), replaceData(offset,count,string), splitText(offset), substringData(offset,count) 等函数
+      
+      newLink.href = "http://www.qq.com"; 
+      newLink.appendChild(newBr); 
+      newLink.appendChild(newBr.cloneNode(false));   // false 表示不复制子节点
+      newLink.appendChild(newLinkTextNode); 
+      
+      nodeParent.appendChild(newLink);
+      
+      document.getElementById('AddNodeTest').disabled = true;
+      document.getElementById('InsertNodeTest').disabled = false;
+    }
+    else if(act == 3){
+      var nodeParent = document.getElementById('NodeTest').parentNode;
+      var new_h3Node = document.getElementById('h3Test').cloneNode(true);
+      var newBr = document.createElement("br");
+      
+      nodeParent.insertBefore(newBr, nodeParent.lastChild);
+      nodeParent.insertBefore(newBr.cloneNode(false), nodeParent.lastChild);
+      nodeParent.insertBefore(new_h3Node, nodeParent.lastChild);
+      
+      document.getElementById('InsertNodeTest').disabled = true;
+      document.getElementById('ReplaceNodeTest').disabled = false;
+    }
+    else if(act == 4){
+      var nodeParent = document.getElementById('NodeTest').parentNode;
+      var newNode = document.getElementById('NodeTest').cloneNode(true);
+    	
+      nodeParent.replaceChild(newNode, nodeParent.lastChild.previousSibling);
+    	
+      document.getElementById('ReplaceNodeTest').disabled = true;
+      document.getElementById('DeleteNodeTest').disabled = false;
+    }
+    else if(act == 5){
+      var nodeParent = document.getElementById('NodeTest').parentNode;
+      nodeParent.removeChild(nodeParent.lastChild.previousSibling);
+      nodeParent.removeChild(nodeParent.lastChild.previousSibling);
+      nodeParent.removeChild(nodeParent.lastChild.previousSibling);
+      nodeParent.removeChild(nodeParent.lastChild);
+    	
+      document.getElementById('DeleteNodeTest').disabled = true;
+      document.getElementById('AddNodeTest').disabled = false;
+    }
+  }
+  
+  var ExistWindow; 
+  var NewWindow;   
+  function MyWindowTest(act)
+  {
+  	var strOptions=""; 
+    for(var i=0; i<document.MyForm3.elements.length; i++) { 
+      if((document.MyForm3.elements[i].type == "checkbox") && (document.MyForm3.elements[i].checked)) 
+         strOptions = strOptions + document.MyForm3.elements[i].name + "=no,";      // 不起作用, 改成 yes 1 0 结果都一样, height 那四个有作用
+    }
+    strOptions = strOptions + "height=" + document.MyForm3.NewHeight.value + ","; 
+    strOptions = strOptions + "width=" + document.MyForm3.NewWidth.value + ","; 
+    strOptions = strOptions + "top=" + document.MyForm3.NewTop.value + ","; 
+    strOptions = strOptions + "left=" + document.MyForm3.NewLeft.value; 
+
+  	if(act == 1){      // 打开已存在的页面
+      var MyURL = document.MyForm3.NewURL.value; 
+      var MyName = document.MyForm3.NewName.value; 
+      ExistWindow = window.open(MyURL, MyName, strOptions); 
+      document.getElementById('NewWindowTest1').disabled = true;
+      document.getElementById('NewWindowTest2').disabled = false;
+    }
+    else if(act == 2){     // 新建页面
+      var MyURL = ''; 
+      var MyName = document.MyForm3.NewName.value; 
+      NewWindow = window.open(MyURL, NewName, strOptions); 
+      document.getElementById('NewWindowTest2').disabled = true;
+      document.getElementById('NewWindowTest3').disabled = false;
+      NewWindow.document.write(document.MyForm3.NewContents.value); 
+      NewWindow.focus(); 
+    }
+    else if(act == 3){
+      ExistWindow.close(); 
+      NewWindow.close(); 
+      document.getElementById('NewWindowTest3').disabled = true;
+   	  document.getElementById('NewWindowTest1').disabled = false;
+    }
+  } 
+
+	
+  function caseTest() 
+  { 
+  	var msg = "";
+    var yearStr = window.prompt("请输入您的军龄(整数值, 0表示未参军) : ", 5); 
+    var year = parseInt(yearStr);
+    var army;
+    switch(year) 
+    { 
+      case 0: 
+        army="平民"; 
+        break; 
+      case 1: 
+        army="列兵"; 
+        break; 
+      case 2: 
+        army="上等兵"; 
+        break; 
+      case 3: 
+      case 4: 
+      case 5: 
+        army="一级士官"; 
+        break; 
+      case 6: 
+      case 7: 
+      case 8: 
+        army="二级士官"; 
+        break; 
+      default: 
+        if (year>8) 
+           army="中高级士官"; 
+    } 
+    
+    msg += "军龄: " + year + "年\n"; 
+    msg += "结论: " + army + "\n"; 
+    alert(msg); 
+  } 
+  
+  function ifTest()
+  {
+  	var msg = "";
+    var num = parseInt(window.prompt("Please input a number : ", 10)); 
+    if(num < 0)
+      msg = "Input number < 0";
+    else if(num == 0)
+      msg = "Input number = 0";
+    else if(num > 0 && num < 100)
+      msg = "Input number > 0, and < 100";
+    else if(num == 100 || num == 800)
+      msg = "Input number == 100, or == 800";
+    else
+      msg = "other number";
+    	
+    alert(msg); 
+  }
+
+  function for_inTest()
+  {
+  	var msg = "";
+  	var i = 0; 
+    msg += "Window对象支持的属性和方法: \n"; 
+    for(num in window){ 
+      msg = msg + num + " "; 
+      i += 1; 
+      if((i%5)==0) 
+         msg+="\n"; 
+    } 
+    alert(msg); 
+  }
+  
+  var numOfRun = 0;
+  function for_whileTest()
+  {  	
+    numOfRun++;
+    var msg="\n第" + numOfRun + "次执行\n\n使用break和continue控制循环: \n\n"; 
+    var n=-1; 
+    var iArray=new Array("YSQ","JHX","QZY","LJY","HZF","XGM","LJY","LHZ"); 
+    
+    while(n<iArray.length){ 
+      n+=1;
+      if(n==3) 
+        continue; 
+      if(n==6) 
+        break; 
+      msg+="iArray["+n+"] = "+iArray[n]+"\n";  
+    }  
+    
+    msg+="\nfor 测试\n"; 
+    for(var i=0;i<iArray.length;i++)  
+      msg+="iArray["+i+"] ="+iArray[i]+" \n"; 
+    
+    alert(msg);
+  }
+  
+  function browserTest()
+  {
+  	// 由于兼容性以及历史原因，名字都比较奇怪点
+  	var msg = "navigator\n=========\n"; 
+    msg += "浏览器名称 : " + navigator.appName + "\n"; 
+    msg += "浏览器版本 : " + navigator.appVersion + "\n"; 
+    msg += "浏览器代码 : " + navigator.appCodeName + "\n"; 
+    msg += "操作系统   : " + navigator.platform + "\n";
+    msg += "用户代理   : " + navigator.userAgent + "\n";
+    msg += "语言代码   : " + navigator.language + "\n";
+    
+    msg += "\nscreen\n======\n"; 
+    msg += "availHeight : " + screen.availHeight + "\n"; 
+    msg += "availWidth : "+ screen.availWidth + "\n"; 
+    msg += "Height : " + screen.height + "\n"; 
+    msg += "Width : " + screen.width + "\n"; 
+    msg += "colorDepth : " + screen.colorDepth + "\n"; 
+    msg += "availLeft : " + screen.availLeft + "\n"; 
+    msg += "availTop : " + screen.availTop + "\n"; 
+    msg += "pixelDepth : " + screen.pixelDepth + "\n";
+    
+    alert(msg);
+  }
+  
+  var locationTestFlag = 0;
+  function locationTest()
+  {
+  	var msg = "";
+  	msg += "location.hash : " + location.hash + "\n";
+  	msg += "location.host : " + location.host + "\n";
+  	msg += "location.hostname : " + location.hostname + "\n";
+  	msg += "location.href : " + location.href + "\n";
+  	msg += "location.pathname : " + location.pathname + "\n";
+  	msg += "location.port : " + location.port + "\n";
+  	msg += "location.protocol : " + location.protocol + "\n";
+  	msg += "location.search : " + location.search + "\n";
+  	
+  	alert(msg);
+  	
+  	if(locationTestFlag == 0){
+  	  location.assign("http://www.qq.com");    // 跳转到 qq，可以返回
+  	}else if(locationTestFlag == 1){
+      location.reload(true);                   // 刷新当前页面
+  	}else if(locationTestFlag == 2){
+      location.replace("http://www.qq.com");   // 载入新文档，不可返回
+  	}
+  }
+  
+  function documentTest()
+  {
+  	// 如果用 document.write 而不是用 alert 的话可能会有死循环
+  	// 因为 document.write 每次都会添加新的元素到 document.all
+  	
+    var msg = "document.forms 数组\n==============\n";       
+    for(var i=0; i < document.forms.length; i++)
+       msg += "类型: " + typeof(document.forms[i]) + " 编号: " + i + " 名称: " + document.forms[i].name + "\n"; 
+    
+    msg += "\ndocument.forms[1] 数组\n================\n";
+    for(var i=0; i < document.forms[1].length; i++)
+       msg += "类型: " + typeof(document.forms[1].elements[i]) + " 编号: " + i + " 名称: " + document.forms[1].elements[i].name + "\n"; 
+    
+    msg = msg + "\ninnerHTML\n========\n" + document.getElementById('MyForm2').innerHTML;    // Form 标签里面的所有内容
+    msg = msg + "\ninnerText\n========\n" + document.getElementById('MyForm2').innerText;    // Form 标签里面的文本内容
+    msg = msg + "\nouterHTML\n========\n" + document.getElementById('MyForm2').outerHTML;    // 包括 Form 标签在内的所有内容
+    msg = msg + "\n\nouterText\n========\n" + document.getElementById('MyForm2').outerText;  // 包括 Form 标签在内的文本内容
+    
+    msg = msg + "\n!!!!!!\nappend <center><p>interHTML TEST</p></center> to innerHTML\n!!!!!!\n";
+    document.getElementById('MyForm2').innerHTML += "<center><p>interHTML TEST</p></center>";
+    
+    msg += "\ndocument.all 数组\n==============\n";
+    for(var i=0; i < document.all.length; i++)
+       if(document.all[i].tagName != "BR" && document.all[i].tagName != "INPUT" && document.all[i].tagName != "CENTER" && i<100)    // 太多过滤一些
+          msg += "类型: " + typeof(document.all[i]) + " 编号: " + i + " 名称: " + document.all[i].tagName + "\n"; 
+          
+    window.alert(msg);  // 等于 alert(msg);
+  }
+  
+  // 可以为函数定义静态变量
+  function sum(x,y){ 
+    if(sum.arguments.length!=2)
+       return;
+    if( (typeof(x)!="number") || (typeof(y)!="number") ) 
+       return "NotNumber";
+    sum.result=sum.result+x+y; 
+    return(sum.result); 
+  } 
+  sum.result=0;   
+
+  // 递归
+  function recursion(m){ 
+    var result=0;
+    if(m==0) 
+       return 0; 
+    else 
+       result=m+recursion(m-1); 
+    return result; 
+  } 
+  
+  // 响应事件
+  // <input type=button value="func" onClick="funcTest()"> 
+  // <a href="javascript:funcTest();">func</a>
+  function funcTest() 
+  { 
+  	var tempData; 
+  	var msg="\n函数的静态变量: \n";
+    tempData=sum(2,3); 
+    msg+="tempData = sum(2,3) ===> "; 
+    msg+="tempData = "+tempData+" sum.result = "+sum.result+"\n"; 
+    tempData=sum(4,5); 
+    msg+="tempData = sum(4,5) ===> "; 
+    msg+="tempData = "+tempData+" sum.result = "+sum.result+"\n"; 
+    tempData=sum(6,7); 
+    msg+="tempData = sum(6,7) ===> "; 
+    msg+="tempData = "+tempData+" sum.result = "+sum.result+"\n\n"; 
+
+    
+    msg+="\n递归函数\n";
+    msg+="recursion(10) = " + recursion(10) + "\n\n";
+
+
+    // 使用 new 操作符和 Function() 构造函数生成函数 newFunc()
+    var newFunc = new Function("result1", "result2", "alert(result1+\"\\n\"+result2)"); 
+    
+    msg+="\n使用 Function 构造函数: \n"; 
+    msg+='var newFunc = new Function("result1", "result2", "alert(result1+\\"\\\\n\\"+result2)");';
+    msg+="\n调用: \n";
+    msg+="newFunc(msg, \"Welcome to JavaScript World!\");\n"; 
+    newFunc(msg, "Welcome to JavaScript World!\n"); 
+    
+    //window.close();
+  } 
+
+  // 可以为对象添加新的变量或函数 Array.prototype.max=array_max;
+  function array_max(){
+     var i, max=this[0];
+     for(i=1;i<this.length;i++){
+       if(max<this[i])
+         max = this[i];
+     }
+     return max;
+  }
+  
+  // array4.sort(MyCompFunc)
+  function MyCompFunc(arg1,arg2)
+  {
+    if(arg1<arg2)
+      return -1;
+    else if(arg1>arg2)
+      return 1;
+    else
+      return 0;
+  }
+  
+  
+  
+  var thisValue = "globalValue";
+  function thisFunc(n){
+    document.write(n + " : " + this.thisValue);
+  }
+  function ThisObjA(){
+  	this.thisValue = "thisObjA";
+  	this.objA_func = thisFunc;
+  }
+  function ThisObjB(){
+    this.thisValue = "thisObjB";
+    this.objB_func = thisFunc;
+  }
+  function call_apply_bind_Test()
+  {
+    document.write("<br>thisFunc(0) = ");
+    thisFunc(0);
+    document.write("<br>thisFunc.call(window, 1) = ");
+    thisFunc.call(window, 1);
+    
+    thisObjA = new ThisObjA();
+    thisObjB = new ThisObjB();
+    document.write("<br>thisFunc.call(thisObjA, 2) = ");
+    thisFunc.call(thisObjA, 2);
+    document.write("<br>thisFunc.call(thisObjB, 3) = ");
+    thisFunc.call(thisObjB, 3);
+    document.write("<br>thisObjA.objA_func(4) = ");
+    thisObjA.objA_func(4);
+    document.write("<br>thisObjB.objB_func(5) = ");
+    thisObjB.objB_func(5);
+    document.write("<br>thisObjB.objB_func.call(thisObjA, 6) = ");
+    thisObjB.objB_func.call(thisObjA, 6);
+    document.write("<br>thisObjA.objA_func.call(thisObjB, 7) = ");
+    thisObjA.objA_func.call(thisObjB, 7);
+    
+    document.write("<br><br>apply 和 call 作用是相同的, 但参数的调用有区别：");
+    document.write("<br>func.call(obj, \"var1\", \"var2\")");
+    document.write("<br>func.apply(obj, [\"var1\", \"var2\"])");
+    document.write("<br>thisFunc.apply(thisObjA, [8]) = ");
+    thisFunc.apply(thisObjA, [8]);
+    
+    /*Function.prototype.bind = function(obj) {
+    	var method = this,
+    	temp = function() {
+    		return method.apply(obj, arguments);
+    	};
+    	
+    	return temp;
+    }*/
+    document.write("<br><br>高版本的浏览器才支持 bind, 不支持的可以自己实现");
+    document.write("<br>var thisFuncBind = thisFunc.bind(thisObjA)");
+    document.write("<br>thisFuncBind(9) = ");
+    var thisFuncBind = thisFunc.bind(thisObjA);
+    thisFuncBind(9);
+    document.write("<br>var objA_funcBind = thisObjA.objA_func.bind(thisObjB)");
+    document.write("<br>objA_funcBind(10) = ");
+    var objA_funcBind = thisObjA.objA_func.bind(thisObjB);
+    objA_funcBind(10);
+  }
+	
+	
+	
+  function JSOnLoad()
+  {      
+    var string1="30121"; 
+    var string2="34.12"; 
+    var string3="Money*#100"; 
+    with(document)
+    {
+       write("string1 = " + string1 + "; 类型: " + typeof(string1) + "<br>");
+       write("string2 = " + string2 + "; 类型: " + typeof(string2) + "<br>");
+       write("string3 = " + string3 + "; 类型: " + typeof(string3) + "<br>");
+
+       var temp1=escape(string3); 
+       write("temp1=escape(string3) : " + temp1 + "; 类型 : " + typeof(temp1) + "<br>");
+       temp2=unescape(temp1); 
+       write("temp2=unescape(temp1) : " + temp2 + "; 类型 : " + typeof(temp2) + "<br>");
+       write("<br>");
+    }
+    
+    
+    var num1="123abc"
+    var num2="abc123"
+    var num3="123.456789abc"
+    
+    document.write("（1）使用parseInt()函数<br>");
+    document.write("123abc转化结果为:"+parseInt(num1)+"<br>");
+    document.write("abc123转化结果为:"+parseInt(num2)+"<br><br>");
+    
+    document.write("（2）使用parseFloat()函数<br>");
+    document.write("123.456789abc转化结果为:"+parseFloat(num3)+"<br><br>");
+
+    document.write("（3）使用isNaN()函数<br>");
+    document.write("123.456789abc转化后是否为NaN:"+isNaN(parseFloat(num3))+"<br>");
+    document.write("abc123转化结果后是否为NaN:"+isNaN(parseInt(num2))+"<br><br>");
+
+    document.write("（4）使用isFinite()函数<br>");
+    document.write("1除以0的结果是否为无穷大："+isFinite(1/0)+"<br><br>");
+
+    document.write("（5）使用encodeURI()函数<br>");
+    document.write("转化为网络资源地址为："+encodeURI("http://127.0.0.1/save.html?name=测试")+"<br><br>");
+
+    document.write("（6）使用decodeURI()函数<br>");
+    document.write("转化网络资源地址的字符串为："+decodeURI(encodeURI("http://127.0.0.1/save.html?name=测试"))+"<br><br>");
+    
+    
+    document.write("Array<br>=====<br>");
+    
+    /* 
+     *  使用 prototype 可以动态的增加函数和属性
+     */   
+    Array.prototype.myValue=10;
+    Array.prototype.outAll=function(ar)
+    {
+      document.write("enter outAll<br>");
+      for(var i = 0; i < this.length; i++)
+      {
+        document.write(this[i]);
+        if(i != (this.length-1))
+           document.write(ar);
+      }
+      document.write("<br>Array 静态变量 : " + this.myValue + "<br>");
+      document.write("leave outAll<br>");
+    }
+    
+    var array1 = new Array();    // var array = new Array(6);
+    for(var i=0; i<6; i++)
+        array1[i]=i;
+
+    document.write("array1[i].toString() : ");
+    for (var i=0; i<array1.length; i++)
+       document.write("array1[" + i + "]=" + array1[i].toString() + "; ");
+    document.write("<br>array1 : " + array1 + "<br>");
+    document.write("array1.toString() : " + array1.toString() + "<br>");
+    document.write("<br>array1.outAll(\":\")<br>");
+    array1.outAll(":");
+    
+    var array2 = new Array(1,2,3);    // 一般不这样用，直接 var array2 = [1,2,3];
+    var array3 = [4,5,6];  
+    var array4 = array2.concat(array3);
+    document.write("<br>array2 : " + array2);
+    document.write("<br>array3 : " + array3);
+    document.write("<br>array4 = array2.concat(array3) : " + array4 + "<br>");
+    
+    document.write("<br> array4.shift() : " + array4.shift());
+    document.write("<br> array4 : " + array4);
+    document.write("<br> array4.unshift(0, 10) : " + array4.unshift(0, 10));
+    document.write("<br> array4 : " + array4);
+    
+    document.write("<br> array4.pop() : " + array4.pop());
+    document.write("<br> array4 : " + array4);
+    document.write("<br> array4.push(8, 7) : " + array4.push(8, 7));
+    document.write("<br> array4 : " + array4);
+    
+    document.write("<br> array4.reverse() : " + array4.reverse());
+    document.write("<br> array4.sort() : " + array4.sort());      // 按字符排的
+    document.write("<br> array4 : " + array4);
+    document.write("<br> array4.sort(MyCompFunc) " + array4.sort(MyCompFunc));      // 按大小排的
+    document.write("<br> array4 : " + array4);
+    
+    document.write("<br> array4.slice(2,5) : " + array4.slice(2,5));
+    document.write("<br> array4 : " + array4);
+    document.write("<br> array4.join(\":\") " + array4.join(":"));
+    document.write("<br> array4 : " + array4);
+    document.write("<br> array4.splice(2,0) " + array4.splice(2,0));
+    document.write("<br> array4 : " + array4);
+    document.write("<br> array4.splice(2,3) " + array4.splice(2,3));
+    document.write("<br> array4 : " + array4);
+    document.write("<br> array4.splice(2,3,\"New1\",\"New2\") " + array4.splice(2,3,"New1","New2"));
+    document.write("<br> array4 : " + array4 + "<br><br>");
+   
+    var array5 = ["Tom","Jerry","Lily","Hanks"]; 
+    for(var i=0; i<array5.length; i++) 
+        document.write("array5[" + i + "]=" + array5[i] + "; ");
+    document.write("<br>after array5.length=3<br>"); 
+    array5.length=3; 
+    for(var i=0; i<array5.length; i++) 
+        document.write("array5[" + i + "]=" + array5[i] + "; ");
+
+    document.write("<br><br>为 Array 自定义函数 max<br>");
+    Array.prototype.max=array_max;
+    var x = new Array(1,6,2,5,3,4);
+    var y = x.max();
+    document.write("x.constructor is : " + x.constructor + "<br>x.toString() is : " + x.toString() + "<br>max is : " + y + "<br><br>");
+    
+    
+    document.write("通过 element:value 的方式创建任意下标的数组, 并通过 for...in 获取<br>================<br>");
+    var objects={user:"xxx",age:29,QQ:"xxxxxx",city:"GZ"};
+    for(var example in objects){
+       document.write("属性：" + example + " = " + objects[example] + "<br>");
+    }   
+    document.write("<br>");
+       
+    
+    document.write("String<br>======<br>");
+    var str = new String("String Test");  // 可以直接用 var str = "String Test";
+    if(str.constructor == String)
+    {
+       document.write("String constructor : " + str.constructor + "<br>String: " + str + "<br>length: " + str.length + "<br>");
+    }
+    // match,search,replace等函数支持正则表达式, 参见正则表达式部分
+    document.write("str.match(\"g Te\") : " + str.match("g Te") + "<br>");
+    document.write("str.match(\"g te\") : " + str.match("g te") + "<br>");
+    document.write("str.match(\"g [Tt]e\") : " + str.match("g [Tt]e") + "<br>");
+    document.write("str.match(\"[Tt].*[Tt]\") : " + str.match("[Tt].*[Tt]") + "<br>");
+    document.write("str.match(\"[Tt].*?[Tt]\") : " + str.match("[Tt].*?[Tt]") + "<br>");    // 非贪婪匹配
+    document.write("str.search(\"T.*d\") : " + str.search("T.*d") + "<br>");
+    document.write("str.search(\"T.*t\") : " + str.search("T.*t") + "<br>");
+    document.write("str.indexOf(\"T.*t\") : " + str.indexOf("Test") + "<br>");  
+    document.write("str.replace(\"Test\", \"testing\") : " + str.replace("Test", "testing") + "<br>");
+    document.write("str : " + str + "<br>");
+    document.write("str.substr(2, 5) : \"" + str.substr(2, 5) + "\"<br>");
+    document.write("str.substring(2, 5) : \"" + str.substring(2, 5) + "\"<br>");
+    document.write("str.split(\" \") : " + str.split(" ") + "<br>");
+    document.write("str.split(\"\", 10) : " + str.split("", 10) + "<br>");
+    document.write("str.split(\"t\") : " + str.split("t") + "<br>");
+    document.write("str : " + str + "<br>");
+    document.write("str.toUpperCase() : " + str.toUpperCase() + "<br>");
+    document.write("str.big() : " + str.big() + "<br>");
+    document.write("str.small() : " + str.small() + "<br>");
+    document.write("str.bold() : " + str.bold() + "<br>");
+    document.write("str.fontcolor('blue') : " + str.fontcolor('blue') + "<br>");   // 也可以 str.fontcolor('0000ff')
+    document.write("str.fontsize(5) : " + str.fontsize(5) + "<br>");
+    document.write("str.fontsize('-2') : " + str.fontsize('-2') + "<br>");
+    document.write("str.strike() : " + str.strike() + "<br>");
+    document.write("str : " + str + "<br><br>");
+    
+    
+    // \b 字符边界
+    // ?匹配0或1个，?跟在 *，+，{n} 等字符后时，匹配模式变成非贪婪匹配
+    // [abc] 匹配包含的字符, [^abc] 匹配未包含的字符, [1-9] [a-z] 匹配指定范围
+    // (pattern) 捕获匹配，\num 引用匹配，如 (\w)(\w)\2\1，要在其他地方引用匹配可用 RegExp.$1，注意是全局对象 RegExp 不是变量 
+    // (?:pattern) 不捕获匹配如 (?:abc)? 匹配0或1个abc但不捕获匹配，而不是用(abc)?
+    // 正向"预测现行"匹配 (?=pattern) 如 "Windows (?=NT|2000)" 匹配 Windows NT 或 Windows 2000 中的 Windows，不捕获匹配
+    // 反向"预测现行"匹配 (?!pattern) 如 "Windows (?!NT|2000)" 匹配 Windows 2003 中的 Windows，不捕获匹配
+    
+    // 显示 ：var reg_exp = new RegExp("pattern"[,"flags"])  如 var reg_exp = new RegExp("\\w+")   // 必须转义 \
+    // 隐式 ：var reg_exp = /pattern/flags                   如 var reg_exp = /\w+/                // 无须转义 \
+    // flags - g 全局标志
+    //         i 忽略大小写
+    //         m 多行标志，可匹配到 \n 或 \r 之后的位置
+    
+    // 每次操作 RegExp 都会更新
+    
+    var reg_exp1 = new RegExp("^m.*r");
+    var reg_exp2 = /\bmicro\b/;
+    var reg_exp3 = /Windows (?=NT|2000)/;
+    var reg_exp4 = /Windows (?!NT|2000)/;
+    var reg_exp5 = /<(.*)>.*<\/\1>/;
+    var reg_exp6 = /size = (\d+GB)/i;
+    var testString1 = "microsoft";
+    var testString2 = "soft micro";
+    var testString3 = "Windows NT";
+    var testString4 = "Windows 2003";
+    var testString5 = "<title>Sample Page!</title>";     // HTML 中输出 <> 需要 &lt; 和 &gt; 转义，空格的转义符 &nbsp;
+    var testString6 = "available size = 256GB --- return ok";    
+    
+    document.write("正则表达式<br>==========<br>");
+    document.write("testString1=" + testString1 + "; testString2=" + testString2 + "; testString3=" + testString3 + "; testString4=" + testString4 + "; testString5=&lt;title&gt;Sample Page!&lt;/title&gt;" + "; testString6=" + testString6 + "<br>");
+    document.write("reg_exp1=" + reg_exp1  + "; reg_exp2=" + reg_exp2 + "; reg_exp3=" + reg_exp3 + "; reg_exp4=" + reg_exp4 + "; reg_exp5=" + reg_exp5 + "; reg_exp6=" + reg_exp6 + "<br>");
+    document.write("<font size='+1'>reg_exp1.test(testString1) : " + reg_exp1.test(testString1) + "<br>");
+    document.write("reg_exp1.test(testString2) : " + reg_exp1.test(testString2) + "<br>");
+    document.write("reg_exp2.test(testString1) : " + reg_exp2.test(testString1) + "<br>");
+    document.write("<font size='+0'>reg_exp2.test(testString2) : " + reg_exp2.test(testString2) + "<br>");
+    document.write("reg_exp3.test(testString3) : " + reg_exp3.test(testString3) + "<br>");
+    document.write("reg_exp3.test(testString4) : " + reg_exp3.test(testString4) + "<br>");
+    document.write("reg_exp4.test(testString3) : " + reg_exp4.test(testString3) + "<br>");
+    document.write("reg_exp4.test(testString4) : " + reg_exp4.test(testString4) + "<br>");
+    document.write("RegExp.input : \"" + RegExp.input + "\"<br>");
+    document.write("RegExp.lastMatch : \"" + RegExp.lastMatch + "\"<br>");
+    document.write("RegExp.lastParen : \"" + RegExp.lastParen + "\"<br>");
+    document.write("RegExp.leftContext : \"" + RegExp.leftContext + "\"<br>");
+    document.write("RegExp.rightContext : \"" + RegExp.rightContext + "\"<br>");
+    document.write("RegExp.$1 : \"" + RegExp.$1 + "\"<br>");
+    document.write("reg_exp5.test(testString5) : " + reg_exp5.test(testString5) + "&nbsp;&nbsp;&nbsp;  label : " + RegExp.$1 + "<br>");
+    document.write("reg_exp6.test(testString6) : " + reg_exp6.test(testString6) + "<br>");
+    document.write("RegExp.input : \"" + RegExp.input + "\"<br>");
+    document.write("RegExp.lastMatch : \"" + RegExp.lastMatch + "\"<br>");
+    document.write("RegExp.lastParen : \"" + RegExp.lastParen + "\"<br>");
+    document.write("RegExp.leftContext : \"" + RegExp.leftContext + "\"<br>");
+    document.write("RegExp.rightContext : \"" + RegExp.rightContext + "\"<br>");
+    document.write("RegExp.$1 : \"" + RegExp.$1 + "\"<br>");
+    document.write("reg_exp6.global=" + reg_exp6.global + "; reg_exp6.ignoreCase=" + reg_exp6.ignoreCase + "; reg_exp6.multiline=" + reg_exp6.multiline + "<br>");
+    document.write("reg_exp6.source : \"" + reg_exp6.source + "\"<br>");
+    
+    /* exec 返回的是数组, 数组 0 包含完整的匹配, 数组 1 到 N 包含子匹配, 该数组还有 index 表示匹配的起始位置，以及 input 表示输入的字符串
+       设置 g 则从 lastIndex 开始查找, 每次都会更新 lastIndex, 初始值为 0
+       不设置 g 则忽略 lastIndex, 每次都从字符串起始位置开始查找, lastIndex 在 reg_exp7 里
+    */
+    var reg_exp7 = /\d.(\w+)/g;
+    var testString7 = "1 How 2 are 3 you?";
+    document.write("<br>testString7=\"" + testString7 + "\"<br>");
+    document.write("reg_exp7=\"" + reg_exp7 + "\"<br>");
+    document.write("while(arr = reg_exp7.exec(testString7))<br>");
+    var arr;
+    while((arr = reg_exp7.exec(testString7)) != null){
+       for(var i = 0; i < arr.length; i++)
+          document.write("arr[" + i + "]=\"" + arr[i] + "\"; ");
+       document.write("<br>arr.index=" + arr.index + "; reg_exp7.lastIndex=" + reg_exp7.lastIndex + "<br>");
+    }
+    
+    reg_exp7 = /(\d).(\w+)/;
+    arr = reg_exp7.exec(testString7);
+    document.write("<br>reg_exp7=\"" + reg_exp7 + "\"<br>");
+    document.write("arr = reg_exp7.exec(testString7)<br>");
+    for(var i = 0; i < arr.length; i++)
+       document.write("arr[" + i + "]=\"" + arr[i] + "\"; ");
+    document.write("<br>arr.index=" + arr.index + "; reg_exp7.lastIndex=" + reg_exp7.lastIndex + "<br>");
+    document.write("arr.input=\"" + arr.input + "\"<br>");
+        
+    reg_exp7 = /(\w+).(\d)/;
+    arr = testString7.match(reg_exp7);     // str.match("...") 和 str.match(/.../) 不一样
+    document.write("<br>reg_exp7=\"" + reg_exp7 + "\"<br>");
+    document.write("arr = testString7.match(reg_exp7)<br>");
+    for(var i = 0; i < arr.length; i++)
+       document.write("arr[" + i + "]=\"" + arr[i] + "\"; ");
+    document.write("<br>arr.index=" + arr.index + "; reg_exp7.lastIndex=" + reg_exp7.lastIndex + "<br>");
+    document.write("arr.input=\"" + arr.input + "\"<br>");
+    
+    document.write("<br>testString7.search(reg_exp7) : " + testString7.search(reg_exp7) + "<br>");
+    document.write("testString7.replace(reg_exp7, \"$2$1\") : " + testString7.replace(reg_exp7, "$2$1") + "<br>");
+    document.write("testString7=" + testString7 + "<br>");
+    
+    
+    document.write("<br>Math<br>====<br>");
+    document.write("Math.E : " + Math.E + "<br>");
+    document.write("Math.LN2 : " + Math.LN2 + "<br>");
+    document.write("Math.LN10 : " + Math.LN10 + "<br>");
+    document.write("Math.LOG2E : " + Math.LOG2E + "<br>");
+    document.write("Math.LOG10E : " + Math.LOG10E + "<br>");
+    document.write("Math.PI : " + Math.PI + "<br>");
+    document.write("Math.SQRT2 : " + Math.SQRT2 + "<br>");
+    document.write("Math.abs(-10) : " + Math.abs(-10) + "<br>");
+    document.write("Math.sin(Math.PI/6) : " + Math.sin(Math.PI/6) + "<br>");
+    document.write("Math.ceil(1.06) : " + Math.ceil(1.06) + "<br>");     // 返回大于或等于x的最小整数
+    document.write("Math.floor(2.96) : " + Math.floor(2.96) + "<br>");   // 返回小于或等于x的最大整数
+    document.write("Math.exp(2) : " + Math.exp(2) + "<br>");  
+    document.write("Math.log(1) : " + Math.log(1) + "<br>");  
+    document.write("Math.max(2,5) : " + Math.max(2,5) + "<br>");  
+    document.write("Math.min(2,5) : " + Math.min(2,5) + "<br>");  
+    document.write("Math.pow(2,5) : " + Math.pow(2,5) + "<br>");
+    document.write("Math.random() : " + Math.random() + "<br>");
+    document.write("Math.round(1.49) : " + Math.round(1.49) + "<br>");
+    document.write("Math.round(1.51) : " + Math.round(1.51) + "<br>");
+    document.write("Math.sqrt(9) : " + Math.sqrt(9) + "<br>");
+    
+    
+    var numObj1 = new Number(10);  // 一般不这样用，直接 var num = 10;
+    var numObj2 = 3.1415926;  
+    document.write("<br>Number<br>======<br>");
+    document.write("numObj1 : " + numObj1 + "<br>");
+    document.write("numObj2 : " + numObj2 + "<br>");
+    document.write("numObj1.toString() : " + numObj1.toString() + "<br>");
+    document.write("numObj1.toString(16) : " + numObj1.toString(16) + "<br>");
+    document.write("numObj2.toFixed(3) : " + numObj2.toFixed(3) + "<br>");
+    document.write("numObj2.toExponential(3) : " + numObj2.toExponential(3) + "<br>");
+    document.write("numObj2.toPrecision(10) : " + numObj2.toExponential(10) + "<br>");
+    document.write("Number.MAX_VALUE : " + Number.MAX_VALUE + "<br>");
+    document.write("Number.MIN_VALUE : " + Number.MIN_VALUE + "<br>");
+    document.write("Number.NEGATIVE_INFINITY : " + Number.NEGATIVE_INFINITY + "<br>");
+    document.write("Number.POSITIVE_INFINITY : " + Number.POSITIVE_INFINITY + "<br>");
+    
+    
+    var boolObj1 = new Boolean(false);   // 一般不这样用，直接 var boolObj1 = false;
+    var boolObj2 = new Boolean(3);
+    var boolObj3 = new Boolean("");
+    var boolObj4 = new Boolean("abc");
+    document.write("<br>Boolean<br>=======<br>");
+    document.write("boolObj1 " + boolObj1 + "; boolObj2 " + boolObj2 + "; boolObj3 " + boolObj3 + "; boolObj4 " + boolObj4 + "<br>");
+    document.write("toString : " + boolObj1.toString() + " " + boolObj2.toString() + " " + boolObj3.toString() + " " + boolObj4.toString() + "<br>");
+    document.write("valueOf : " + boolObj1.valueOf() + " " + boolObj2.valueOf() + " " + boolObj3.valueOf() + " " + boolObj4.valueOf() + "<br>");
+    
+    
+    with(document)
+    {
+       write("<br>with<br>====<br>");
+       write("使用<br>with(object) {<br>&nbsp;&nbsp;func();<br>}<br>可以代替<br>object.func();<br>");
+    }
+	
+	
+    document.write("<br>class<br>=====<br>");
+	  
+    document.write("<ul><li>通过定义对象的构造函数</li></ul>");
+    function School(iName, iAddress, iGrade, iNumber) 
+    { 
+       this.name=iName; 
+       this.address=iAddress; 
+       this.grade=iGrade; 
+       this.number=iNumber;
+       this.information=function() 
+       { 
+          var msg = "School 实例：<br>"; 
+          msg += "机构名称 : " + this.name + "<br>"; 
+          msg += "所在地址 : " + this.address + "<br>"; 
+          msg += "教育层次 : " + this.grade + "<br>"; 
+          msg += "在校人数 : " + this.number + "<br>"; 
+          return msg;
+       };
+    };
+    var school_1 = new School("中国科技大学", "安徽·合肥", "高等学府", "10000"); 
+    var school_2 = new School("中山大学", "广东·广州", "高等学府", "12000"); 
+    document.write(school_1.information());
+    document.write(school_2.information());
+    
+    document.write("<ul><li>修改、删除对象实例的属性</li></ul>");
+    delete school_1.number;
+    school_2.number = 20000;
+    document.write(school_1.information());
+    document.write(school_2.information());
+    
+    document.write("<ul><li>通过对象直接初始化的方法</li></ul>");
+    var school_3 = {
+        name:"华南理工大学", 
+        address:"广州", 
+        grade:"高校", 
+        number:"15000", 
+        information:function () 
+        { 
+           var msg = "School 实例：<br>"; 
+           msg += "机构名称 : " + this.name + "<br>"; 
+           msg += "所在地址 : " + this.address + "<br>"; 
+           msg += "教育层次 : " + this.grade + "<br>"; 
+           msg += "在校人数 : " + this.number + "<br>"; 
+           return msg;
+        }
+    }; 
+    document.write(school_3.information());
+    
+    document.write("<ul><li>通过 prototype 添加新属性和方法, 以及重载方法</li></ul>");
+    function NewMethod(){ 
+       var AddMsg="New Method : " + this.addAttribute + "!<br>"; 
+       return AddMsg; 
+    } 
+    // 如何重载函数？？
+    function NewInformation(){
+       var msg = "School 实例：<br>"; 
+       msg += "机构名称 : " + this.name + "<br>"; 
+       msg += "所在地址 : " + this.address + "<br>"; 
+       msg += "教育层次 : " + this.grade + "<br>"; 
+       msg += "在校人数 : " + this.number + "<br>"; 
+       msg += "新属性   : " + this.addAttribute + "<br>"; 
+       msg += "新方法   : " + this.addMethod() + "<br>"; 
+       return msg;
+    }
+    School.prototype.addAttribute = "newAttr";
+    School.prototype.addMethod = NewMethod;
+    School.prototype.information = NewInformation; // 不起作用
+    school_1.addAttribute = "NewAttr1";
+    school_2.addAttribute = "NewAttr2";
+    document.write(school_1.addMethod());
+    document.write(school_2.addMethod());
+    // 还是调用旧函数
+    // 想要函数可重载, 可以在定义 School 的时候把函数放到外面通过 prototype 定义
+    //     School.prototype.information=function() 
+    document.write(school_2.information());  
+
+    
+    document.write("<br>call apply bind<br>===============");
+    
+    call_apply_bind_Test();
+
+    document.write("<br>");
+            
+        
+    document.write("<br>Date<br>====<br>");
+    var date1=new Date();
+    document.write(date1 + "<br>");
+    document.write(date1.toString() + "<br>");
+    document.write(date1.toLocaleString() + "<br>");
+    document.write(date1.toUTCString() + "<br>");
+    var date2=new Date(2008,8,1,17,30,50); // 8 is Sep
+    document.write(date2 + "<br>");
+    date2.setYear(2015);
+    document.write(date2 + "<br>");
+    var date3=new Date("Sep 27,2008 20:30:50");
+    document.write(date3 + "<br>");
+    document.write("UTC : " + date3.toUTCString() + "<br>");
+    document.write("getDay : " + date3.getDay() + "<br>");
+    document.write("getDate : " + date3.getDate() + "<br>");  // date 是几号，day 是星期几
+    document.write("getUTCDate() : " + date3.getUTCDate() + "<br>");
+    document.write("getTime : " + date3.getTime() + "<br>");
+
+
+    // activeX 会被 chrome 阻止，IE 需要调安全性，貌似不会用到，读写文件应该是针对服务端才行，客户出于安全考虑不允许
+    //var fso=new ActiveXObject("FileSystemObject");  
+    
+    document.write("<br><br><br><br><br><br>");
+  }
+	
+--> 
+</script>
+</head>
+
+<!--
+  页面加载后 document 会被 close，之后再调用 document.write()，会重新 open 一个新的 document，这样就会覆盖掉原来的内容。
+  所以 document.write 最好放在加载的时候调用，之后要添加新内容需要用其他方式。
+  可通过 innerHTML innerText outerHTML outerText 等属性改变 HTML 的内容，如：document.getElementById('MyForm2').innerHTML += "<center><p>interHTML TEST</p></center>";
+-->
+<body onkeydown="maskingKeyboard()" onLoad="StartClock()">   
+   <center> 
+      <form > 
+      	 <font color=0000ff size=5><br>=== body ===<br><br></font>          
+         <input type=button value="case" onclick="caseTest()"> 
+         <input type=button value="if" onclick="ifTest()"> 
+         <input type=button value="for_in" onclick="for_inTest()"> 
+         <input type=button value="for_while" onclick="for_whileTest()">
+         <input type=button value="func" onClick="funcTest()">  
+         <input type=button value="browser" onclick="browserTest()"> 
+         <input type=button value="location" onclick="locationTest()"> 
+         <input type=button value="document" onclick="documentTest()"> 
+      </form> 
+      <a href="javascript:funcTest();">func</a>
+   </center> 
+   <center>
+      <form name="MyForm" id="MyForm"> 
+         <br>欢迎访问 <a href=http://www.baidu.com onclick="javascript:alert('你点击了一个链接！\n')">Baidu</a><br>
+         <br>欢迎访问 <a href=http://www.baidu.com onclick="javascript:this.href='http://www.qq.com/'">Google</a><br>
+         <font color=0000ff size=6 class="fontTest"><br>你好 JavaScript</font><br>
+         <br><input type=text name="MyText" id="MyText" size=50 onfocus="MyFocus()"><br>
+         <br>事件 -> <input type=text name="MyEventText" id="MyEventText" size=60 style="height:30px"> 
+      </form> 	
+   </center>
+   <center> 
+      <form name="MyForm2" id="MyForm2" method="post" action="target.asp" onsubmit=return(MySubmit())>    <!-- 如果 MySubmit 不返回 false 则跳到 target.asp -->
+         <br>
+         用户:<input name="name" size="18" ><br><br> 
+         密码:<input type="password" name="password" size="19"><br><br>
+         <input type="submit" value="提交" name="B1" > 
+         <input type="reset" value="重置" name="B2" >
+      </form> 
+   </center> 
+   <center> 
+   	  <br>
+   	  <p> p 定义段落，会自动在其前后留一些空白 </p>
+   	  <p> 这几行在一个 p 里 <br> 可以看到之间没有留空白 <br> 下面是一个 table </p>
+   	  <table border="1" onclick=MyBubble("事件定位于&nbsp;table,&nbsp;转向下面事件\n\n",&nbsp;0)>  <!-- 因为这里是 HTML，所以空格需要转义，否则不起作用 -->
+         <tr>
+             <th> th1 </th>
+             <th> th2 </th>
+         </tr>
+         <tr onclick=MyBubble("事件定位于&nbsp;tr,&nbsp;转向下面事件\n\n",&nbsp;1)>
+             <td>&nbsp; table border="1" 表示会有边框 &nbsp;</td>
+             <td onclick=MyBubble("事件定位于&nbsp;td,&nbsp;转向下面事件\n\n",&nbsp;2)>
+             	  &nbsp; Click the <em onclick=MyBubble("事件定位于&nbsp;em,&nbsp;转向下面事件\n\n",&nbsp;3)> EM text </em> to Test! &nbsp;
+             </td>
+         </tr>
+      </table> 
+      <h3 id="MyTest_h3" align="center">My h3 Test String! 中间!</font></h3>
+      <input type="button" id="h3Test" value="改变 h3 & 背景色" onclick="myCompAttrTest()"><br><br>
+      <font id="fontTest" style="background-color:#FF0000;color:#FFFFFF;padding:3px" onmouseover="myColorTest()">改变背景和链接的颜色</font>      <!--onmouseout-->
+      <br><br>
+      <input type="button" value="prompt confirm alert" onclick="myPromptConfirmTest()">
+      <br><br>
+      <input type="button" value="节点" onclick="myNodeTest(1)" id="NodeTest" >
+      <input type="button" value="添加节点" onclick="myNodeTest(2)" id="AddNodeTest">
+      <input type="button" value="复制和插入" onclick="myNodeTest(3)" id="InsertNodeTest" disabled="true">
+      <input type="button" value="复制和替换" onclick="myNodeTest(4)" id="ReplaceNodeTest" disabled="true">
+      <input type="button" value="删除节点" onclick="myNodeTest(5)" id="DeleteNodeTest" disabled="true">
+   </center> 
+   <center> 
+      <form name="MyForm3" id="MyForm3">
+         <br>
+         <input type="button" id="NewWindowTest1" value="新窗口中打开已存在页面" onclick="MyWindowTest(1)"> 
+         <input type="button" id="NewWindowTest2" value="新窗口中打开空白页并写入内容" onclick="MyWindowTest(2)" disabled="true"> 
+         <input type="button" id="NewWindowTest3" value="关闭新打开的窗口" onclick="MyWindowTest(3)" disabled="true"> 
+         <hr>
+         窗口地址 ：<input type="text" name="NewURL" id="NewURL" value="Frame_and_History/index.html"><br> 
+         窗口名称 ：<input type="text" name="NewName" id="NewName" value="NEW"><br> 
+         窗口高度 ：<input type="text" name="NewHeight" id="NewHeight" maxlength=4 value=290><br> 
+         窗口宽度 ：<input type="text" name="NewWidth" id="NewWidth" maxlength=4 value=324><br> 
+         左边距离 ：<input type="text" name="NewTop" id="NewTop" maxlength=4 value=100><br> 
+         顶端距离 ：<input type="text" name="NewLeft" id="NewLeft" maxlength=4 value=100><br>
+         窗口内容 ：<textarea name="NewContents" id="NewContents" rows=4 cols=22>Contents Write to the new blank window!</textarea><br><br>
+         <input type="checkbox" name="scrollbar" id="scrollbar">滚动条
+         <input type="checkbox" name="resizable" id="resizable">大小改变
+         <input type="checkbox" name="directories" id="directories">目录按钮
+         <input type="checkbox" name="location" id="location">地址栏
+         <input type="checkbox" name="menubar" id="menubar">菜单栏<br>
+      </form> 
+   </center> 
+
+</body>
+
+<script language="JavaScript" type="text/javascript"> 
+<!-- 
+   /*
+     <!-- -> 表示加载这里面的内容时忽略出现的错误。
+   */
+   
+   /*
+     JavaScript 可以在 body 之前，也可以在 body 之后，还可以放在 Head，加载顺序会有不同。
+   */
+
+   document.write("<br><br><br><center>=== JavaScript AFTER body ===</center><br><br><br>");
+   JSOnLoad();
+   
+   // document.MyForm.MyText.onfocus = MyFocus;   // 这句如果放在 head 不起作用 
+   
+--> 
+</script> 
+
+</html> 

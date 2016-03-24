@@ -1,0 +1,16 @@
+{
+    	  "name" : "microsoft",
+    	  "employee" : [
+    	     { "name":"Lin",  "num":"123", "sex":"male",   "dep":"IT" },
+    	     { "name":"Dong", "num":"456", "sex":"female", "dep":"Sale" },
+    	     { "name":"Zhao", "num":"789", "sex":"female", "dep":"Finance" },
+    	     { "name":"Chen", "num":"101", "sex":"male",   "dep":"HR" }
+    	  ],
+    	  "department" : { 
+    	  	 "IT" : {"num":"100", "city":"GZ SH"}, 
+    	  	 "Sale" : {"num":"300", "city":"GZ SZ"}, 
+    	  	 "Finance" : {"num":"20", "city":"SZ SH"}, 
+    	  	 "HR" : {"num":"30", "city":"GZ SZ SH"}
+    	  },
+    	  "city" : ["GuangZhou", "ShenZhen", "ShangHai"]
+}
